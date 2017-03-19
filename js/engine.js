@@ -70,7 +70,7 @@ var Engine = (function(global) {
     
     function checkCollisions() {
     	allEnemies.forEach(function(enemy) {
-    		if ((player.x >enemy.x-70 && player.x < enemy.x +100) && (player.y >enemy.y-80  && player.y < enemy.y + 70)) {
+    		if ((player.x >enemy.x-70 && player.x < enemy.x +100) && (player.y >enemy.y-100  && player.y < enemy.y + 70)) {
     			player.x = 202;
     			player.y = 415;
     		}

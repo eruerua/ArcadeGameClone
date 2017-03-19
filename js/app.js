@@ -1,12 +1,12 @@
 // 这是我们的玩家要躲避的敌人 
-var Enemy = function(x,y) {
+var Enemy = function() {
     // 要应用到每个敌人的实例的变量写在这里
     // 我们已经提供了一个来帮助你实现更多
 
     // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
+    this.x = -100;
+    this.y = getRandomInt(0,3)*80-20;
 };
 
 // 此为游戏必须的函数，用来更新敌人的位置
@@ -18,6 +18,8 @@ Enemy.prototype.update = function(dt) {
     	 this.x = this.x + dt*100;
     } else {
     	this.x =-100;
+    	this.y = getRandomInt(0,4)*80-20;
+    	rate = Math.random();
     }
    
 };
@@ -27,10 +29,10 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var Player = function(x,y) {
+var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = x;
-    this.y = y;
+    this.x = 202;
+    this.y = 415;
 };
 
 Player.prototype.update = function() {
@@ -65,10 +67,15 @@ Player.prototype.handleInput = function(keyCode) {
     }
     
 }
-var enemy1 = new Enemy(1,-20);
-var enemy2 = new Enemy(-100,63);
-var enemy3 = new Enemy(-50,146);
-var enemy4 = new Enemy(-20,229);
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+var enemy1 = new Enemy();
+var enemy2 = new Enemy();
+var enemy3 = new Enemy();
+var enemy4 = new Enemy();
 var allEnemies = [enemy1,enemy2,enemy3,enemy4];
 console.log(allEnemies);
 var player = new Player(202,415);
