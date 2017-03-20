@@ -67,14 +67,14 @@ var Engine = (function(global) {
         updateEntities(dt);
         checkCollisions();
     }
-    
+
     function checkCollisions() {
-    	allEnemies.forEach(function(enemy) {
-    		if ((player.x >enemy.x-70 && player.x < enemy.x +100) && (player.y >enemy.y-100  && player.y < enemy.y + 70)) {
-    			player.x = 202;
-    			player.y = 415;
-    		}
-    	})
+        allEnemies.forEach(function(enemy) {
+            if ((player.x >enemy.x-101 && player.x < enemy.x +101) && (player.y == enemy.y)) {
+                player.x = 202;
+                player.y = 415;
+        }
+        });
     }
 
     /* 这个函数会遍历在 app.js 定义的存放所有敌人实例的数组，并且调用他们的 update()
