@@ -1,12 +1,9 @@
 // 这是我们的玩家要躲避的敌人
 var Enemy = function() {
-    // 要应用到每个敌人的实例的变量写在这里
-    // 我们已经提供了一个来帮助你实现更多
-
-    // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
+    // 加载敌人图片，确定初始位置和速度
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
-    this.y = getRandomInt(1,4)*83;
+    this.y = getRandomInt(1,4) * 83 - 20;
     this.rate = getRandomInt(1,6);
 };
 
@@ -16,10 +13,10 @@ Enemy.prototype.update = function(dt) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
     if (this.x < 505) {
-        this.x = this.x + this.rate*dt*100;
+        this.x = this.x + this.rate * dt * 100;
     } else {
-        this.x =-100;
-        this.y = getRandomInt(1,4)*83;
+        this.x = -100;
+        this.y = getRandomInt(1,4) * 83 - 20;
         this.rate = getRandomInt(1,6);
     }
 
@@ -30,6 +27,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//加载玩家图片，确定初始位置
 var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
@@ -37,55 +35,63 @@ var Player = function() {
 };
 
 Player.prototype.update = function() {
-
+    //空操作
 };
 
+//设置标志符，当游戏结束时，屏蔽按键功能
+var flag = true;
+
+//玩家渲染
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     if (this.y === 0) {
         ctx.font = "52px Impact";
         ctx.fillStyle = "black";
         ctx.fillText("YOU WIN!!",152, 343);
+        flag = false;
     }
 };
 
+//处理按键
 Player.prototype.handleInput = function(keyCode) {
-    if (keyCode == 'left') {
-        this.x -= 101;
-        console.log(this.x);
-    } else if (keyCode == 'up') {
-        this.y -= 83;
-    } else if (keyCode == 'right') {
-        this.x += 101;
-    } else if (keyCode == 'down') {
-        this.y += 83;
-    }
-    if (this.x <= 0 ) {
-        this.x = 0;
-    }else if (this.x >= 404) {
-        this.x = 404;
-    }
+    if (flag) {
+        if (keyCode == 'left') {
+            this.x -= 101;
+            console.log(this.x);
+        } else if (keyCode == 'up') {
+            this.y -= 83;
+        } else if (keyCode == 'right') {
+            this.x += 101;
+        } else if (keyCode == 'down') {
+            this.y += 83;
+        }
+        if (this.x <= 0 ) {
+            this.x = 0;
+        }else if (this.x >= 404) {
+            this.x = 404;
+        }
 
-    if (this.y <= 0) {
-        this.y = 0;
-    }else if (this.y >= 415) {
-        this.y = 415;
+        if (this.y <= 0) {
+            this.y = 0;
+        }else if (this.y >= 415) {
+            this.y = 415;
+        }
     }
 
 };
 
+//获得随机数
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+//创建对象
 var enemy1 = new Enemy();
 var enemy2 = new Enemy();
 var enemy3 = new Enemy();
 var enemy4 = new Enemy();
 var allEnemies = [enemy1,enemy2,enemy3,enemy4];
-console.log(allEnemies);
 var player = new Player();
-console.log(player);
 // 现在实现你自己的玩家类
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 

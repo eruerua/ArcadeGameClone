@@ -68,9 +68,10 @@ var Engine = (function(global) {
         checkCollisions();
     }
 
+    //碰撞检测
     function checkCollisions() {
         allEnemies.forEach(function(enemy) {
-            if ((player.x >enemy.x-101 && player.x < enemy.x +101) && (player.y == enemy.y)) {
+            if ((player.x > enemy.x - 101 && player.x < enemy.x + 101) && (Math.abs(player.y - enemy.y) <= 20)) {
                 player.x = 202;
                 player.y = 415;
         }
