@@ -65,7 +65,7 @@ Player.prototype.handleInput = function(keyCode) {
         } else if (keyCode == 'down') {
             this.y += 83;
         }
-        if (this.x <= 0 ) {
+        if (this.x <= 0) {
             this.x = 0;
         }else if (this.x >= 404) {
             this.x = 404;
