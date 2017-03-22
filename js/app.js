@@ -123,7 +123,7 @@ function reset() {
     player.y = titleHeight * 5;
 }
 
-//
+//设置按键事件监听
 document.getElementById('reset').addEventListener('click', reset, false);
 
 
