@@ -15,14 +15,13 @@ var Enemy = function(spite,x,y,rate) {
 Enemy.prototype.update = function(dt) {
     // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
     // 都是以同样的速度运行的
-    if (this.x < 505) {
+    if (this.x < titleWidth * 5) {
         this.x = this.x + this.rate * dt * 100;
     } else {
         this.x = -100;
         this.y = getRandomInt(1,4) * TITLEHEIGHT - 20;
         this.rate = getRandomInt(1,6);
     }
-
 };
 
 // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -66,6 +65,7 @@ Player.prototype.handleInput = function(keyCode) {
         } else if (keyCode == 'down') {
             this.y += TITLEHEIGHT;
         } 
+
         if (this.x <= 0) {
             this.x = 0;
         }else if (this.x >= TITLEWEIGHT * 4) {
@@ -126,7 +126,7 @@ function reset() {
     player.y = TITLEHEIGHT * 5;
 }
 
-//
+//设置按键事件监听
 document.getElementById('reset').addEventListener('click', reset, false);
 
 
