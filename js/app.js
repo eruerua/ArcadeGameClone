@@ -1,14 +1,13 @@
 "use strict";
-
-var titleWidth = 101;
-var titleHeight = 83;
+var TITLEHEIGHT = 83,
+    TITLEWEIGHT = 101;
 // 这是我们的玩家要躲避的敌人
-var Enemy = function() {
+var Enemy = function(spite,x,y,rate) {
     // 加载敌人图片，确定初始位置和速度
-    this.sprite = 'images/enemy-bug.png';
-    this.x = -100;
-    this.y = getRandomInt(1,4) * titleHeight - 20;
-    this.rate = getRandomInt(1,6);
+    this.sprite = spite;
+    this.x = x;
+    this.y = y;
+    this.rate = rate;
 };
 
 // 此为游戏必须的函数，用来更新敌人的位置
@@ -20,7 +19,7 @@ Enemy.prototype.update = function(dt) {
         this.x = this.x + this.rate * dt * 100;
     } else {
         this.x = -100;
-        this.y = getRandomInt(1,4) * titleHeight - 20;
+        this.y = getRandomInt(1,4) * TITLEHEIGHT - 20;
         this.rate = getRandomInt(1,6);
     }
 
@@ -32,10 +31,8 @@ Enemy.prototype.render = function() {
 };
 
 //加载玩家图片，确定初始位置
-var Player = function() {
-    this.sprite = 'images/char-boy.png';
-    this.x = titleWidth * 2;
-    this.y = titleHeight * 5;
+var Player = function(spite,x,y) {
+    Enemy.call(this,spite,x,y);
 };
 
 Player.prototype.update = function() {
@@ -60,28 +57,31 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyCode) {
     if (flag) {
         if (keyCode == 'left') {
-            this.x -= titleWidth;
+            this.x -= TITLEWEIGHT;
             console.log(this.x);
         } else if (keyCode == 'up') {
-            this.y -= titleHeight;
+            this.y -= TITLEHEIGHT;
         } else if (keyCode == 'right') {
-            this.x += titleWidth;
+            this.x += TITLEWEIGHT;
         } else if (keyCode == 'down') {
-            this.y += titleHeight;
-        }
+            this.y += TITLEHEIGHT;
+        } 
         if (this.x <= 0) {
             this.x = 0;
-        }else if (this.x >= titleWidth * 4) {
-            this.x = titleWidth * 4;
+        }else if (this.x >= TITLEWEIGHT * 4) {
+            this.x = TITLEWEIGHT * 4;
         }
 
         if (this.y <= 0) {
             this.y = 0;
-        }else if (this.y >= titleHeight * 5) {
-            this.y = titleHeight * 5;
+        }else if (this.y >= TITLEHEIGHT * 5) {
+            this.y = TITLEHEIGHT * 5;
+        }
+    } else {
+        if (keyCode == 'space') {
+            reset();  
         }
     }
-
 };
 
 //获得随机数
@@ -92,10 +92,12 @@ function getRandomInt(min, max) {
 //创建对象
 var allEnemies = [];
 for (var i = 0; i<=3;i++) {
-    var enemy = new Enemy();
+    var enemy = new Enemy('images/enemy-bug.png',-100,getRandomInt(1,4) * TITLEHEIGHT - 20,getRandomInt(1,6));
     allEnemies.push(enemy);
 }
-var player = new Player();
+
+
+var player = new Player('images/char-boy.png',TITLEWEIGHT * 2,TITLEHEIGHT * 5);
 // 现在实现你自己的玩家类
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 
@@ -111,7 +113,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        32: 'space'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
@@ -119,8 +122,8 @@ document.addEventListener('keyup', function(e) {
 
 function reset() {
     flag = true;
-    player.x = titleWidth * 2;
-    player.y = titleHeight * 5;
+    player.x = TITLEWEIGHT * 2;
+    player.y = TITLEHEIGHT * 5;
 }
 
 //
